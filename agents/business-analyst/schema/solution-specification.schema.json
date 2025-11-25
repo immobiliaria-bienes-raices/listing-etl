@@ -1,0 +1,113 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Solution Specification Schema",
+    "description": "Minimal structure for mapping specifications to problems, maintaining traceability to requirements and domain knowledge",
+    "type": "object",
+    "properties": {
+        "specifications": {
+            "type": "array",
+            "description": "Array of specifications that map to problems in the problem tree",
+            "items": {
+                "$ref": "#/definitions/specification"
+            },
+            "minItems": 0
+        }
+    },
+    "required": ["specifications"],
+    "definitions": {
+        "specification": {
+            "type": "object",
+            "description": "A specification that addresses one or more problems and satisfies requirements",
+            "properties": {
+                "specification-id": {
+                    "type": "string",
+                    "description": "Unique identifier for this specification",
+                    "pattern": "^[a-zA-Z0-9_-]+$"
+                },
+                "specification-name": {
+                    "type": "string",
+                    "description": "Name or title of the specification",
+                    "minLength": 1
+                },
+                "specification-description": {
+                    "type": "string",
+                    "description": "Description of what the specification defines and how it addresses problems",
+                    "minLength": 1
+                },
+                "problem-references": {
+                    "type": "array",
+                    "description": "Array of problem IDs from the problem tree that this specification addresses",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                },
+                "requirements-satisfied": {
+                    "type": "array",
+                    "description": "Array of requirement IDs (from set R) satisfied by this specification",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": []
+                },
+                "domain-knowledge-used": {
+                    "type": "array",
+                    "description": "Array of domain knowledge IDs (from set K) used in this specification",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": []
+                },
+                "consistency-validation": {
+                    "type": "object",
+                    "description": "Status of consistency checks for this specification",
+                    "properties": {
+                        "with-domain-knowledge": {
+                            "type": "boolean",
+                            "description": "Whether specification is consistent with domain knowledge (K)",
+                            "default": false
+                        },
+                        "with-requirements": {
+                            "type": "boolean",
+                            "description": "Whether specification satisfies requirements (R) when combined with K",
+                            "default": false
+                        },
+                        "environment-constraint-check": {
+                            "type": "boolean",
+                            "description": "Whether specification does not constrain the environment",
+                            "default": false
+                        },
+                        "unshared-components-check": {
+                            "type": "boolean",
+                            "description": "Whether specification does not use unshared actions or state components",
+                            "default": false
+                        },
+                        "future-reference-check": {
+                            "type": "boolean",
+                            "description": "Whether specification does not refer to the future",
+                            "default": false
+                        }
+                    },
+                    "required": [
+                        "with-domain-knowledge",
+                        "with-requirements",
+                        "environment-constraint-check",
+                        "unshared-components-check",
+                        "future-reference-check"
+                    ]
+                }
+            },
+            "required": [
+                "specification-id",
+                "specification-name",
+                "specification-description",
+                "problem-references",
+                "requirements-satisfied",
+                "domain-knowledge-used",
+                "consistency-validation"
+            ],
+            "additionalProperties": false
+        }
+    }
+}
+

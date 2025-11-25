@@ -1,0 +1,149 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Goal Tree Schema",
+    "description": "Hierarchical structure for goal decomposition where top-level goals are recursively decomposed into subgoals such that the conjunction of subgoals entails the parent goal. Each level describes desired emergent properties of RE (requirements specification). Lower-level goals are means to achieve higher-level goals and are more operationalized.",
+    "type": "object",
+    "properties": {
+        "goal-tree": {
+            "type": "object",
+            "description": "Root container for all goals in the tree",
+            "patternProperties": {
+                "^goal-[a-zA-Z0-9_-]+$": {
+                    "$ref": "#/definitions/goal"
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "required": ["goal-tree"],
+    "definitions": {
+        "goal": {
+            "type": "object",
+            "description": "A goal node in the hierarchical tree. Can contain nested subgoals recursively. Lower-level goals are means to achieve higher-level goals and are more operationalized.",
+            "properties": {
+                "goal-id": {
+                    "type": "string",
+                    "description": "Unique identifier for this goal node",
+                    "pattern": "^[a-zA-Z0-9_-]+$"
+                },
+                "goal-name": {
+                    "type": "string",
+                    "description": "Name or title of the goal",
+                    "minLength": 1
+                },
+                "goal-description": {
+                    "type": "string",
+                    "description": "Description of the desired emergent property of RE (requirements specification) that this goal represents",
+                    "minLength": 1
+                },
+                "goal-rationale": {
+                    "type": "string",
+                    "description": "Explanation of why this goal exists and how it contributes to achieving the parent goal",
+                    "minLength": 1
+                },
+                "sub-goals": {
+                    "type": "array",
+                    "description": "Array of subgoals that jointly entail this goal. Lower-level goals are means to achieve higher-level goals. Can contain nested goal objects recursively.",
+                    "items": {
+                        "$ref": "#/definitions/goal"
+                    },
+                    "minItems": 0
+                },
+                "sud-involvement": {
+                    "type": "boolean",
+                    "description": "Whether the System under Development (SuD) plays a part in achieving this goal. Goals with SuD involvement should be displayed in italics.",
+                    "default": false
+                },
+                "operationalization-level": {
+                    "type": "string",
+                    "description": "Level of operationalization of this goal relative to its position in the hierarchy",
+                    "enum": ["strategic", "tactical", "operational", "atomic"],
+                    "default": "strategic"
+                },
+                "means-end-relationship": {
+                    "type": "string",
+                    "description": "Description of how this goal serves as a means to achieve its parent goal (for subgoals) or how it represents an end state (for top-level goals)",
+                    "minLength": 1
+                },
+                "emergent-properties": {
+                    "type": "array",
+                    "description": "Desired emergent properties of RE (requirements specification) that this goal contributes to",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": []
+                },
+                "requirements-references": {
+                    "type": "array",
+                    "description": "Array of requirement IDs (from set R) that this goal addresses",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": []
+                },
+                "domain-knowledge-references": {
+                    "type": "array",
+                    "description": "Array of domain knowledge IDs (from set K) relevant to this goal",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": []
+                },
+                "validation-status": {
+                    "type": "object",
+                    "description": "Track validation state for goal decomposition",
+                    "properties": {
+                        "conjunction-logic-verified": {
+                            "type": "boolean",
+                            "description": "Whether subgoals jointly entail parent goal",
+                            "default": false
+                        },
+                        "means-end-verified": {
+                            "type": "boolean",
+                            "description": "Whether lower-level goals are verified as means to achieve higher-level goals",
+                            "default": false
+                        },
+                        "operationalization-verified": {
+                            "type": "boolean",
+                            "description": "Whether lower levels are more operationalized than higher levels",
+                            "default": false
+                        },
+                        "emergent-properties-validated": {
+                            "type": "boolean",
+                            "description": "Whether emergent properties of RE are properly described",
+                            "default": false
+                        },
+                        "atomic-goal": {
+                            "type": "boolean",
+                            "description": "Whether this goal is atomic (no further decomposition needed)",
+                            "default": false
+                        }
+                    },
+                    "required": [
+                        "conjunction-logic-verified",
+                        "means-end-verified",
+                        "operationalization-verified",
+                        "emergent-properties-validated",
+                        "atomic-goal"
+                    ]
+                }
+            },
+            "required": [
+                "goal-id",
+                "goal-name",
+                "goal-description",
+                "goal-rationale",
+                "sub-goals",
+                "sud-involvement",
+                "operationalization-level",
+                "means-end-relationship",
+                "emergent-properties",
+                "requirements-references",
+                "domain-knowledge-references",
+                "validation-status"
+            ],
+            "additionalProperties": false
+        }
+    }
+}
+
