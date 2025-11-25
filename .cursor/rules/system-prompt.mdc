@@ -1,0 +1,927 @@
+---
+alwaysApply: false
+---
+
+
+This rule defines guidelines for the creation of system prompts. Every system prompt:
+
+- MUST define
+    - **Personality**
+
+        - Agent's tone and character
+
+    - **Contextual Awareness**
+    - **Background information**
+    - **Rules & Constrains**
+        - Guidelines and limitations the agent must adhere to during the interaction.
+
+
+- MUST always have at least 4 out of 5 #[Building Blocks]
+
+- MUST always have at least 6 out of 7 #[Complexity Principles]
+
+
+- MUST be long, complex and rich in information. “The longer and more complex, the better.”
+
+- MUST Use the provided context
+
+- MUST NOT  use <tags>
+
+- MUST keep your task content focused and purposeful. 
+    - Avoid adding extra details just to meet length requirements or to check off building blocks/principles—it should feel natural and relevant to the scenario.
+
+- MUST NOT state the obvious. 
+    - There’s no need to explain expected model behaviors or user
+    traits that are already implied by the task category (e.g., “the user is lazy and may change topics” in a Lazy User + Task Switching task)
+
+    - MUST  not have any #[Banned Content]
+    - MUST not have anu #[Common Errors]
+
+# Banned Content :
+
+## User Behavior Patterns
+
+- DON’T explain that the user gives minimal information, withholds context, or will correct only after mistakes.
+
+- DO Design the prompt so the agent infers and adapts naturally.
+
+
+## Infeasible Tool Use Rules
+
+- DON’T say "you can’t access inventory or payment tools" or "you must fail gracefully if a tool doesn't work."
+
+- DO let the agent discover and respond to these limits through action, not exposition.
+
+
+
+## Forecasting Task Switching
+
+- DON'T have lines like "the user will change direction mid-task".
+
+- DO Construct scenarios where that naturally happens, and let the agent react appropriately.
+
+
+
+## Stating obvious tool descriptions
+
+- DON'T state obvius tool descriptions (e.g The `search_places` tool can be used to find local places based on a search query)
+
+- DO like this "The reddit `search tool` can also be used to find local places in a city and also search recommendations by locals. Prefer this when the user asks for recommendations, over `search_places`
+
+
+
+# Common Errors
+
+## Contradictory System Prompt
+
+- DON't include any contradictory instructions, which confuses the AI and compromises the entire task.
+
+    - **Core Rule:** Ensure all instructions within the System Prompt are aligned and do not conflict with one another.
+
+    - Always double-check that no rule in your System Prompt conflicts with anothers
+
+
+### Method for Success: 
+
+Resolve conflicts by clarifying rules and creating exceptions (e.g., “Responses must be in English, but you may include a short foreign phrase...”). Always review the complete prompt to ensure all instructions are compatible.
+
+
+### Examples
+
+
+- “The user is a college student pursuing a major in linguistics. He’s focusing his studies on Romance languages, specifically Italian and French. He appreciates a casual phrase or word in those languages from time to time.
+… Make the answers concise and summarize ideas into bullet points. If the information comes from a website, always include the consulted link. If the user is asking you for academic information, always conclude your answer by asking if he wants references in APA Style. All responses you provide must be written fully in English; keep the grammar pristine as the user will most likely use them for college assignments.”
+
+- **Why is this an error?**
+
+The System Prompt contradicts itself: it says the user enjoys phrases in Italian and French, but later insists that all responses must always be written in English.
+
+
+
+This creates confusion for the model and lowers the overall task quality
+
+- **Correct Approach**
+
+If you want the user to receive occasional phrases in other languages, clarify the condition (e.g., “Responses should be in English, but you may occasionally include a short greeting or phrase in Italian or French if it adds value.”).
+
+
+- A prompt that first encourages using occasional phrases in Italian or French but later strictly requires all responses to be fully in English creates an impossible-to-follow contradiction.
+
+
+
+# Building Blocks
+
+## Background Information
+
+## Overview
+This file defines how the AI agent should gather, maintain, and utilize background information to provide contextually relevant responses.
+
+## Types of Background Information
+
+### Project Context
+- **Project Goals**: Primary objectives and success criteria
+- **Technical Stack**: Technologies, frameworks, and tools in use
+- **Architecture**: System design and component relationships
+- **Timeline**: Project phases, deadlines, and milestones
+- **Constraints**: Technical, business, or resource limitations
+
+### Domain Knowledge
+- **Industry Standards**: Best practices and conventions
+- **Technical Specifications**: Requirements and standards
+- **Regulatory Requirements**: Compliance and legal considerations
+- **Market Context**: Competitive landscape and trends
+- **Historical Context**: Previous decisions and their rationale
+
+### User Background
+- **Role and Responsibilities**: User's position and scope
+- **Experience Level**: Technical expertise and familiarity
+- **Work Environment**: Team structure and collaboration patterns
+- **Previous Projects**: Relevant experience and lessons learned
+- **Learning Goals**: Areas of interest and development
+
+### System Context
+- **Current State**: What's working and what needs attention
+- **Recent Changes**: Recent modifications and their impact
+- **Known Issues**: Existing problems and workarounds
+- **Dependencies**: External systems and their status
+- **Performance Metrics**: Key indicators and benchmarks
+
+### Information Gathering Strategies
+
+### Proactive Collection
+- Analyze project files and documentation
+- Review recent changes and commit history
+- Examine configuration and setup files
+- Identify patterns in user behavior and needs
+
+### Reactive Collection
+- Ask clarifying questions when context is unclear
+- Request additional information when needed
+- Follow up on incomplete or ambiguous requests
+- Seek confirmation of assumptions
+
+### Continuous Learning
+- Update understanding based on new information
+- Track changes in project direction or requirements
+- Learn from user feedback and corrections
+- Adapt to evolving project needs
+
+## Information Organization
+
+### Hierarchical Structure
+- **Global Context**: Project-wide information
+- **Module Context**: Component-specific details
+- **Session Context**: Current interaction focus
+- **Task Context**: Immediate objective
+
+### Temporal Organization
+- **Historical**: Past decisions and changes
+- **Current**: Present state and active work
+- **Future**: Planned changes and goals
+- **Evolving**: Information that changes over time
+
+### Relevance Scoring
+- **Critical**: Essential for current task
+- **Important**: Relevant to current context
+- **Useful**: May be helpful in future
+- **Background**: General knowledge and context
+
+## Application Guidelines
+
+### Context Integration
+- Use background information to inform responses
+- Connect current requests to broader context
+- Identify potential impacts and dependencies
+- Suggest improvements based on historical patterns
+
+### Information Validation
+- Verify information accuracy and currency
+- Cross-reference multiple sources when possible
+- Flag uncertain or outdated information
+- Ask for confirmation when information is critical
+
+### Context Maintenance
+- Update information as project evolves
+- Remove outdated or irrelevant information
+- Consolidate related information
+- Maintain information hierarchy and relationships
+
+## Best Practices
+- Always consider background information when responding
+- Be explicit about assumptions based on background
+- Ask for clarification when background information is insufficient
+- Regularly review and update background understanding
+
+## Context Information
+
+### Overview
+This file defines how the AI agent should gather, process, and utilize contextual information during interactions.
+
+### Key Components
+
+### Environmental Context
+- Current workspace state
+- Active files and directories
+- Recent user actions
+- System environment details
+
+### User Context
+- User preferences and settings
+- Previous interaction history
+- Current task or project focus
+- User's expertise level
+
+### Task Context
+- Current objective or goal
+- Relevant background information
+- Constraints and requirements
+- Success criteria
+
+### Domain Context
+- Subject matter expertise
+- Technical specifications
+- Industry standards
+- Best practices
+
+### Implementation Guidelines
+
+### Context Gathering
+- Proactively collect relevant information
+- Ask clarifying questions when needed
+- Maintain context across conversation turns
+- Update context as new information becomes available
+
+### Context Application
+- Use context to provide relevant responses
+- Adapt communication style to user level
+- Consider constraints and limitations
+- Maintain consistency with established patterns
+
+### Context Maintenance
+- Track changes in user needs
+- Update understanding based on feedback
+- Preserve important context across sessions
+- Clean up outdated information
+
+### Best Practices
+- Always consider the full context before responding
+- Be explicit about assumptions made from context
+- Ask for clarification when context is ambiguous
+- Use context to personalize interactions
+
+
+## Tonal Control
+
+## Overview
+This file defines how the AI agent should manage tone, voice, and communication style to create appropriate and effective interactions.
+
+## Tone Categories
+
+### Professional Tone
+- **Formal Language**: Use proper grammar and professional vocabulary
+- **Objective Perspective**: Present information neutrally and factually
+- **Respectful Communication**: Maintain courtesy and professionalism
+- **Clear Structure**: Organize information logically and coherently
+
+### Casual Tone
+- **Conversational Style**: Use natural, friendly language
+- **Personal Touch**: Include appropriate personalization
+- **Relaxed Grammar**: Use contractions and informal expressions when appropriate
+- **Engaging Delivery**: Make interactions feel natural and approachable
+
+### Technical Tone
+- **Precise Language**: Use accurate technical terminology
+- **Detailed Explanations**: Provide comprehensive technical details
+- **Structured Format**: Use clear headings, lists, and code blocks
+- **Expert Authority**: Demonstrate deep technical knowledge
+
+### Educational Tone
+- **Patient Explanation**: Break down complex concepts clearly
+- **Encouraging Support**: Provide positive reinforcement and guidance
+- **Progressive Learning**: Build understanding step by step
+- **Accessible Language**: Adapt complexity to user's level
+
+## Tone Adaptation Factors
+
+### User Context
+- **Experience Level**: Adjust complexity and formality
+- **Role and Position**: Match professional expectations
+- **Communication Style**: Mirror user's preferred approach
+- **Cultural Background**: Consider cultural communication norms
+
+### Task Context
+- **Urgency Level**: Adapt to time-sensitive situations
+- **Complexity**: Match tone to task difficulty
+- **Formality Requirements**: Consider business vs. personal contexts
+- **Collaboration Level**: Adjust for individual vs. team work
+
+### Content Type
+- **Technical Documentation**: Use precise, structured tone
+- **Troubleshooting**: Use patient, methodical approach
+- **Creative Work**: Use inspiring, flexible tone
+- **Critical Issues**: Use urgent, focused tone
+
+## Voice Characteristics
+
+### Consistency
+- **Maintain Brand Voice**: Stay consistent with established personality
+- **Reliable Communication**: Provide predictable interaction patterns
+- **Coherent Style**: Ensure tone matches across all interactions
+- **Professional Standards**: Maintain quality and reliability
+
+### Authenticity
+- **Natural Expression**: Use genuine, human-like communication
+- **Appropriate Personality**: Show character without being unprofessional
+- **Sincere Helpfulness**: Demonstrate genuine desire to assist
+- **Honest Communication**: Be transparent about capabilities and limitations
+
+### Adaptability
+- **Context Awareness**: Adjust tone based on situation
+- **User Responsiveness**: Modify approach based on user feedback
+- **Flexible Style**: Switch between formal and casual as appropriate
+- **Learning Adaptation**: Improve tone based on user preferences
+
+### Implementation Guidelines
+
+### Tone Selection
+- **Assess Context**: Consider user, task, and content factors
+- **Choose Appropriate Tone**: Select tone that best serves the situation
+- **Maintain Consistency**: Keep tone consistent within each interaction
+- **Adapt as Needed**: Change tone when context requires it
+
+### Tone Execution
+- **Use Appropriate Language**: Match vocabulary to chosen tone
+- **Structure Communication**: Organize content to support tone
+- **Include Tone Markers**: Use appropriate punctuation and formatting
+- **Monitor Effectiveness**: Adjust if tone isn't working well
+
+### Tone Maintenance
+- **Stay Consistent**: Maintain chosen tone throughout interaction
+- **Handle Tone Shifts**: Manage transitions between different tones
+- **Recover from Mistakes**: Correct tone if it becomes inappropriate
+- **Learn from Feedback**: Improve tone based on user responses
+
+### Best Practices
+- Always consider the user's needs when choosing tone
+- Be authentic and genuine in communication
+- Adapt tone to match the context and content
+- Regularly evaluate and improve tone effectiveness
+
+
+## Tool Use Instruction
+
+## Overview
+This file defines how the AI agent should select, execute, and manage tool usage during interactions.
+
+### Tool Selection Criteria
+
+### Relevance Assessment
+- Match tool capabilities to user needs
+- Consider tool limitations and requirements
+- Evaluate tool efficiency for the task
+- Prioritize tools that provide the most value
+
+### Availability Check
+- Verify tool availability before use
+- Check for required parameters
+- Ensure proper authentication/access
+- Handle tool unavailability gracefully
+
+### Execution Strategy
+- Plan tool usage sequence
+- Minimize redundant tool calls
+- Batch related operations when possible
+- Provide clear feedback on tool execution
+
+### Tool Categories
+
+### File Operations
+- Reading and writing files
+- Directory management
+- File search and filtering
+- Content modification
+
+### Code Operations
+- Code analysis and search
+- Syntax checking and linting
+- Code generation and modification
+- Testing and validation
+
+### External Services
+- Web search and API calls
+- Database operations
+- Third-party integrations
+- Real-time data fetching
+
+### Development Tools
+- Terminal commands
+- Package management
+- Version control operations
+- Build and deployment tasks
+
+### Implementation Guidelines
+
+### Pre-execution
+- Validate all required parameters
+- Check for potential side effects
+- Confirm user intent for destructive operations
+- Provide clear explanation of what will happen
+
+### During Execution
+- Monitor tool execution status
+- Handle errors and timeouts gracefully
+- Provide progress updates for long operations
+- Log important operations for debugging
+
+### Post-execution
+- Verify results meet expectations
+- Handle partial failures appropriately
+- Clean up temporary resources
+- Provide clear summary of outcomes
+
+### Error Handling
+- Catch and interpret tool errors
+- Provide helpful error messages
+- Suggest alternative approaches
+- Escalate complex issues appropriately
+
+### Best Practices
+- Use tools purposefully, not just because they're available
+- Combine multiple tools when it makes sense
+- Always explain what tools are being used and why
+- Respect tool rate limits and usage policies
+
+
+## User Preferences
+
+### Overview
+This file defines how the AI agent should identify, store, and apply user preferences to personalize interactions.
+
+### Preference Categories
+
+### Communication Style
+- **Formality Level**: Formal, casual, or mixed
+- **Technical Depth**: Beginner, intermediate, or expert
+- **Response Length**: Concise, detailed, or adaptive
+- **Language**: Preferred language and terminology
+
+### Workflow Preferences
+- **Code Style**: Indentation, naming conventions, structure
+- **File Organization**: Directory structure, naming patterns
+- **Documentation**: Level of detail, format preferences
+- **Testing**: Testing frameworks, coverage expectations
+
+### Interaction Patterns
+- **Confirmation Style**: Always ask, assume and confirm, or proceed
+- **Explanation Level**: High-level overview, step-by-step, or both
+- **Error Handling**: Detailed debugging, quick fixes, or guided resolution
+- **Progress Updates**: Real-time, summary, or on-demand
+
+### Content Preferences
+- **Code Examples**: Inline, separate files, or both
+- **Visual Elements**: Diagrams, charts, or text-only
+- **References**: Links, citations, or embedded content
+- **Formatting**: Markdown, plain text, or structured formats
+
+### Preference Detection
+
+### Explicit Preferences
+- Direct user statements about preferences
+- Settings in configuration files
+- Previous explicit requests
+- User corrections to agent behavior
+
+### Implicit Preferences
+- Patterns in user behavior
+- Consistent choices across interactions
+- Reaction to different approaches
+- Contextual clues from work environment
+
+### Preference Inference
+- Analyze user's technical level
+- Observe preferred communication patterns
+- Note consistent workflow choices
+- Identify recurring needs and preferences
+
+### Preference Storage
+
+### Session-Level Preferences
+- Temporary preferences for current session
+- Context-specific adjustments
+- Immediate user corrections
+- Short-term workflow adaptations
+
+### Persistent Preferences
+- Long-term communication style
+- Consistent workflow patterns
+- Technical preferences
+- Recurring interaction patterns
+
+### Dynamic Preferences
+- Preferences that change based on context
+- Task-specific adjustments
+- Learning from user feedback
+- Adaptive behavior patterns
+
+### Application Guidelines
+
+### Preference Integration
+- Apply preferences consistently across interactions
+- Balance user preferences with best practices
+- Adapt to changing preferences over time
+- Respect user's explicit overrides
+
+### Preference Conflicts
+- Prioritize explicit over implicit preferences
+- Ask for clarification when preferences conflict
+- Suggest compromises when appropriate
+- Document preference decisions for future reference
+
+### Preference Evolution
+- Track changes in user preferences
+- Adapt to new patterns and needs
+- Suggest improvements based on usage
+- Maintain backward compatibility when possible
+
+### Best Practices
+- Always respect user preferences when possible
+- Ask for clarification rather than assuming
+- Document important preferences for consistency
+- Regularly review and update preference understanding
+
+# Complexity Principles
+
+## Define Personality and Tone
+
+Control the model's character to ensure a consistent and appropriate user experience.
+
+### Overview
+This principle establishes the AI model's personality, communication style, and tone to create a consistent, appropriate, and engaging user experience across all interactions.
+
+### Key Components
+
+### Personality Definition
+- Core character traits and attributes
+- Communication style and approach
+- Professional demeanor and expertise level
+- Emotional intelligence and empathy
+
+### Tone Management
+- Formal vs. casual communication
+- Technical depth and complexity
+- Enthusiasm and engagement level
+- Patience and supportiveness
+
+### Consistency Maintenance
+- Uniform personality across all interactions
+- Reliable communication patterns
+- Predictable response style
+- Coherent character development
+
+### Implementation Guidelines
+
+### Personality Development
+- Define core personality traits clearly
+- Establish communication preferences
+- Set appropriate expertise level
+- Create engaging but professional character
+
+### Tone Adaptation
+- Adjust tone based on context and user needs
+- Maintain consistency within each interaction
+- Adapt to different types of requests
+- Balance professionalism with approachability
+
+### Character Consistency
+- Maintain personality across all interactions
+- Ensure tone matches established character
+- Provide predictable user experience
+- Build trust through consistent behavior
+
+### Best Practices
+- Always maintain consistent personality and tone
+- Adapt communication style to user needs while staying true to character
+- Use personality to enhance rather than distract from assistance
+- Regularly evaluate and refine character traits for better user experience
+
+
+## Guide Tool Use and Response Formatting
+
+Provide clear instructions on when to use tools (like web search) and how to format responses for different contexts.
+
+### Overview
+This principle establishes clear guidelines for when and how to use available tools, and how to format responses appropriately for different contexts and user needs.
+
+### Key Components
+
+### Tool Selection Criteria
+- When to use specific tools
+- Tool appropriateness for different tasks
+- Tool limitations and requirements
+- Tool efficiency and effectiveness
+
+### Response Formatting
+- Context-appropriate formatting styles
+- Structured vs. conversational responses
+- Technical vs. general audience formatting
+- Visual and organizational elements
+
+### Context Adaptation
+- Formatting for different use cases
+- Tool selection based on context
+- Response style matching user needs
+- Appropriate detail levels
+
+### Implementation Guidelines
+
+### Tool Usage Guidelines
+- Define clear criteria for tool selection
+- Specify when tools should and shouldn't be used
+- Provide guidance on tool limitations
+- Establish efficiency standards
+
+### Formatting Standards
+- Create templates for different response types
+- Define formatting rules for various contexts
+- Establish consistency in presentation
+- Provide clear structure and organization
+
+### Context Awareness
+- Adapt tool use to specific situations
+- Format responses for target audience
+- Consider user preferences and needs
+- Maintain appropriate detail levels
+
+### Best Practices
+- Always consider context when selecting tools
+- Use consistent formatting across similar responses
+- Provide clear, well-structured information
+- Adapt approach based on user needs and preferences
+
+
+## Implement Dynamic Behavior Scaling
+
+Instead of having a single static behavior, instruct the model to adapt its approach based on the perceived complexity of the user's request.
+
+### Overview
+This principle enables the AI model to dynamically adjust its behavior, response complexity, and approach based on the perceived complexity and nature of user requests, providing more appropriate and effective assistance.
+
+### Key Components
+
+### Complexity Assessment
+- Request difficulty evaluation
+- User expertise level detection
+- Task complexity analysis
+- Context complexity understanding
+
+### Behavior Adaptation
+- Response detail level adjustment
+- Communication style adaptation
+- Tool usage complexity scaling
+- Approach methodology changes
+
+### Dynamic Scaling
+- Automatic behavior adjustment
+- Context-aware response generation
+- Adaptive assistance provision
+- Flexible problem-solving approaches
+
+### Implementation Guidelines
+
+### Complexity Detection
+- Analyze request characteristics
+- Assess user skill level indicators
+- Evaluate task requirements
+- Consider context complexity
+
+### Behavior Scaling
+- Adjust response detail based on complexity
+- Modify communication style appropriately
+- Scale tool usage to match needs
+- Adapt problem-solving approach
+
+### Dynamic Implementation
+- Implement automatic scaling mechanisms
+- Provide context-aware responses
+- Maintain consistency within complexity levels
+- Ensure smooth transitions between approaches
+
+### Best Practices
+- Always assess request complexity before responding
+- Adapt behavior to match user needs and skill level
+- Provide appropriate detail levels for different contexts
+- Maintain consistency within each complexity level
+
+
+## Inject Critical, Non-Negotiable Facts
+
+For information the model must treat as absolute truth (like the outcome of an event or company facts) and instruct the model on its usage.
+
+### Overview
+This principle ensures the AI model treats certain information as absolute truth and provides clear instructions on how to use this information consistently and accurately across all interactions.
+
+### Key Components
+
+### Fact Identification
+- Critical company information and policies
+- Established outcomes and results
+- Regulatory requirements and compliance
+- Technical specifications and standards
+
+### Fact Injection
+- Embedding critical facts into system prompts
+- Ensuring facts are always considered
+- Making facts non-negotiable and immutable
+- Providing clear usage instructions
+
+### Fact Application
+- Consistent application across all interactions
+- Proper prioritization of critical information
+- Clear communication of non-negotiable elements
+- Enforcement of fact-based decisions
+
+### Implementation Guidelines
+
+### Fact Selection
+- Identify truly critical, non-negotiable information
+- Distinguish between facts and preferences
+- Ensure facts are verifiable and accurate
+- Limit to essential information only
+
+### Fact Integration
+- Embed facts clearly in system prompts
+- Provide explicit usage instructions
+- Make facts easily accessible and referenceable
+- Ensure facts override conflicting information
+
+### Fact Enforcement
+- Always prioritize critical facts
+- Refuse to contradict established facts
+- Provide clear explanations when facts conflict with requests
+- Maintain consistency in fact application
+
+### Best Practices
+- Only include truly critical, non-negotiable information
+- Provide clear instructions on fact usage
+- Ensure facts are accurate and up-to-date
+- Regularly review and update critical facts as needed
+
+## Instruct Critical Evaluation of User Input
+
+Prevent the model from blindly accepting user statements or corrections.
+
+### Overview
+This principle ensures the AI model critically evaluates user input, statements, and corrections rather than blindly accepting them, maintaining accuracy and preventing misinformation while still being responsive to valid user feedback.
+
+### Key Components
+
+### Input Validation
+- Fact-checking user statements
+- Verifying user corrections
+- Assessing input credibility
+- Identifying potential errors
+
+### Critical Analysis
+- Questioning questionable statements
+- Seeking clarification when needed
+- Cross-referencing information
+- Maintaining healthy skepticism
+
+### Balanced Response
+- Respecting valid user input
+- Challenging incorrect information
+- Providing evidence-based responses
+- Maintaining respectful disagreement
+
+### Implementation Guidelines
+
+### Validation Process
+- Always verify user statements when possible
+- Cross-reference information from multiple sources
+- Ask clarifying questions for ambiguous input
+- Maintain records of validation decisions
+
+### Critical Evaluation
+- Question statements that seem incorrect
+- Seek evidence for user claims
+- Provide counter-evidence when appropriate
+- Maintain respectful but firm stance on facts
+
+### Response Strategy
+- Acknowledge valid user input
+- Politely challenge incorrect information
+- Provide evidence for disagreements
+- Maintain professional and helpful tone
+
+### Best Practices
+- Always critically evaluate user input before accepting it
+- Provide evidence-based responses and challenges
+- Maintain respectful disagreement when necessary
+- Continuously improve validation processes based on feedback
+
+## Provide Context Information about Applications and Entities
+
+Help the model understand what applications the user is currently using and what information the is relevant to the applications in-use
+
+### Overview
+This principle focuses on ensuring the AI model has comprehensive understanding of the user's current working environment, including active applications, relevant entities, and contextual information that impacts decision-making.
+
+### Key Components
+
+### Application Context
+- Currently open applications and their state
+- Active projects and workflows
+- Recent actions and changes
+- Application-specific settings and configurations
+
+### Entity Awareness
+- Relevant data objects and structures
+- Relationships between different entities
+- Current state of entities being worked with
+- Dependencies and connections
+
+### Contextual Relevance
+- Information that directly impacts current tasks
+- Background context that influences decisions
+- Environmental factors affecting work
+- Temporal context of ongoing work
+
+### Implementation Guidelines
+
+### Context Gathering
+- Proactively identify relevant applications and entities
+- Monitor changes in the user's working environment
+- Track relationships between different elements
+- Maintain awareness of user's current focus
+
+### Context Application
+- Use application context to provide relevant suggestions
+- Consider entity relationships when making recommendations
+- Adapt responses to current working environment
+- Ensure suggestions align with active applications
+
+### Context Maintenance
+- Update understanding as environment changes
+- Track evolution of entities and relationships
+- Maintain consistency across different applications
+- Preserve important context across sessions
+
+### Best Practices
+- Always consider the full context of user's working environment
+- Ask clarifying questions when context is unclear
+- Provide suggestions that work with current applications
+- Maintain awareness of entity relationships and dependencies
+
+
+## Set Clear Guardrails and Safety Protocols
+
+Explicitly Define Refusal and Safety Boundaries. Implement strict, non-negotiable rules to prevent legal issues and ensure user safety.
+
+### Overview
+This principle establishes strict, non-negotiable safety boundaries and refusal protocols to protect users, prevent legal issues, and ensure responsible AI behavior across all interactions.
+
+### Key Components
+
+### Safety Boundaries
+- Content restrictions and limitations
+- Harmful request identification
+- Inappropriate behavior prevention
+- User protection measures
+
+### Refusal Protocols
+- Clear criteria for request refusal
+- Appropriate refusal responses
+- Alternative suggestions when possible
+- Escalation procedures for complex cases
+
+### Legal Compliance
+- Regulatory requirement adherence
+- Privacy protection measures
+- Data handling restrictions
+- Compliance monitoring
+
+### Implementation Guidelines
+
+### Boundary Definition
+- Clearly define what requests to refuse
+- Establish safety criteria and thresholds
+- Create specific refusal protocols
+- Define escalation procedures
+
+### Refusal Implementation
+- Provide clear, helpful refusal responses
+- Explain why requests cannot be fulfilled
+- Offer alternative approaches when possible
+- Maintain respectful communication
+
+### Safety Monitoring
+- Continuously monitor for safety violations
+- Implement real-time safety checks
+- Maintain safety logs and records
+- Regular safety protocol review
+
+### Best Practices
+- Always prioritize user safety and legal compliance
+- Provide clear, helpful refusal responses
+- Regularly review and update safety protocols
+- Maintain consistent enforcement of safety boundaries

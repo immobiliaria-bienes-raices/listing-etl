@@ -1,0 +1,109 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Problem Tree Schema",
+    "description": "Hierarchical structure for problem decomposition where top-level problems are recursively decomposed into subproblems, such that the conjunction of subproblems entails the parent problem",
+    "type": "object",
+    "properties": {
+        "problem-tree": {
+            "type": "object",
+            "description": "Root container for all problems in the tree",
+            "patternProperties": {
+                "^problem-[a-zA-Z0-9_-]+$": {
+                    "$ref": "#/definitions/problem"
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "required": ["problem-tree"],
+    "definitions": {
+        "problem": {
+            "type": "object",
+            "description": "A problem node in the hierarchical tree. Can contain nested subproblems recursively.",
+            "properties": {
+                "problem-id": {
+                    "type": "string",
+                    "description": "Unique identifier for this problem node",
+                    "pattern": "^[a-zA-Z0-9_-]+$"
+                },
+                "problem-name": {
+                    "type": "string",
+                    "description": "Name or title of the problem",
+                    "minLength": 1
+                },
+                "problem-description": {
+                    "type": "string",
+                    "description": "Detailed description of what needs to be solved",
+                    "minLength": 1
+                },
+                "problem-analysis": {
+                    "type": "string",
+                    "description": "Analysis explaining why this problem exists and how it relates to the parent problem",
+                    "minLength": 1
+                },
+                "sub-problems": {
+                    "type": "array",
+                    "description": "Array of subproblems that jointly entail this problem. Can contain nested problem objects recursively.",
+                    "items": {
+                        "$ref": "#/definitions/problem"
+                    },
+                    "minItems": 0
+                },
+                "requirements-references": {
+                    "type": "array",
+                    "description": "Array of requirement IDs (from set R) that this problem addresses",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": []
+                },
+                "domain-knowledge-references": {
+                    "type": "array",
+                    "description": "Array of domain knowledge IDs (from set K) relevant to this problem",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": []
+                },
+                "validation-status": {
+                    "type": "object",
+                    "description": "Track validation state for completeness conditions",
+                    "properties": {
+                        "requirements-validated": {
+                            "type": "boolean",
+                            "description": "Whether requirements (R) have been validated",
+                            "default": false
+                        },
+                        "domain-knowledge-validated": {
+                            "type": "boolean",
+                            "description": "Whether domain knowledge (K) has been validated",
+                            "default": false
+                        },
+                        "conjunction-logic-verified": {
+                            "type": "boolean",
+                            "description": "Whether subproblems jointly entail parent problem",
+                            "default": false
+                        },
+                        "atomic-problem": {
+                            "type": "boolean",
+                            "description": "Whether this problem is atomic (no further decomposition needed)",
+                            "default": false
+                        }
+                    },
+                    "required": ["requirements-validated", "domain-knowledge-validated", "conjunction-logic-verified", "atomic-problem"]
+                }
+            },
+            "required": [
+                "problem-id",
+                "problem-name",
+                "problem-description",
+                "problem-analysis",
+                "sub-problems",
+                "requirements-references",
+                "domain-knowledge-references",
+                "validation-status"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

@@ -1,0 +1,6 @@
+- It must use type driven development
+- It must be implemented in haskell
+- It must leverage filecoin and ipfs for storage
+
+
+listen to the recording, extract the data, put it in a relational data format, store it in the DB
